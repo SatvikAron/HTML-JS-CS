@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>jQuery Car Racr 2.0</title>
+        
+       <style>
+           /* -------------------
+   CAR RACR 2.0
+   ------------------- */
+
+#racetrack {
+    background: url('road.jpg') center left repeat-x;
+    height: 330px;
+    border-right: dashed 10px white;
+    box-sizing: border-box;
+    margin: 40px 0;
+}
+
+.car {
+    display: block;
+    position: relative;
+}
+
+#car1 { top: 30px; }
+#car2 { top: 100px; }
+
+#raceInfoContainer {
+    width: 80%;
+    margin: 40px auto 0;
+    background: #333;
+    height: 200px;
+}
+
+#raceInfoContainer h2 {
+    color: white;
+    text-transform: uppercase;
+    border-bottom: solid 1px white;
+    padding: 20px 0;
+}
+
+.raceInfo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    width: 50%;
+    float: left;
+}
+
+.raceInfo span {
+    display: block;
+    font-weight: normal;
+    font-size: 18px;
+    color: white;
+}
+
+#raceInfo1 {
+    color: #77b82f;
+}
+
+#raceInfo2 {
+    color: #b82f3e;
+}
+
+input[type="button"] {
+    background: #77b72f;
+    color: white;
+    padding: 10px 20px;
+    border: solid 1px #444;
+}
+
+input#reset {
+    background: #fc3;
+    color: #444;
+}
+
+.clearfix:after {
+    content:"";
+    display: table;
+    clear: both;
+}
+
+           </style>
+        
+    </head>
+    
+    <body id="race">
+        <h1>jQuery Car Racr 2.0</h1>
+        
+        <input type="button" value="Race!" id="go">
+        <input type="button" value="Reset" id="reset">
+        
+        <div id="racetrack">
+            <img src="turles.jpg" alt="Green car" id="car1" class="car">
+            <img src="rabits.jpg" alt="Red car" id="car2" class="car">
+        </div>
+        
+        <div id="raceInfoContainer" class="clearfix">
+            <h2>Results</h2>
+            <div id="raceInfo1" class="raceInfo">Turles<span></span></div>
+            <div id="raceInfo2" class="raceInfo">Rabbits<span></span></div>
+        </div>
+        
+        <!-- Load the CDN first -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        
+        <script>
+             /* -------------------
+       jQUERY CAR RACR 2.0
+       ------------------- */
+    
+    // Click the GO button
+    $('#go').click(function() {
+        
+        
+        // build a function that checks to see if a car has won the race
+        function checkIfComplete() {
+            
+            if( isComplete == false ) {
+                isComplete = true;
+            } else {
+                place = 'second';
+            }
+            
+        }
+        
+        // get the width of the cars
+        var carWidth = $('#car1').width();
+        
+        // get the width of the racetrack
+        var raceTrackWidth = $(window).width() - carWidth;
+        
+        // generate a random # between 1 and 5000
+        
+        var raceTime1 = Math.floor( (Math.random() * 5000) + 1 );
+        var raceTime2 = Math.floor( (Math.random() * 5000) + 1 );
+        
+        // set a flag variable to FALSE by default
+        var isComplete = false;
+        
+        // set a flag variable to FIRST by default
+        var place = 'first';
+        
+        // animate car 1
+        $('#car1').animate({
+        
+            // move the car width of the racetrack
+            left: raceTrackWidth
+            
+        }, raceTime1, function() {
+            
+            // animation is complete
+            
+            // run a function
+            checkIfComplete();
+            
+            // give some text feedback in the race info box
+            $('#raceInfo1 span').text( 'Finished in ' + place + ' place and clocked in at ' + raceTime1 + ' milliseconds!' );
+            
+        });
+        
+        // animate car 2
+        $('#car2').animate({
+        
+            // move the car width of the racetrack
+            left: raceTrackWidth
+            
+        }, raceTime2, function() {
+            
+            // animation is complete
+            
+            // run a function
+            checkIfComplete();
+            
+            // give some text feedback in the race info box
+            $('#raceInfo2 span').text( 'Finished in ' + place + ' place and clocked in at ' + raceTime2 + ' milliseconds!' );
+            
+        });
+        
+    });
+    
+    // reset the race
+    $('#reset').click(function() {
+        $('.car').css('left','0');
+        $('.raceInfo span').text('');
+    });
+    
+            </script>
+    
+</html>
